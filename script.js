@@ -31,16 +31,37 @@
 // hide/unhide winner panel
 
 /* PLAYER*/
+const player = (name, marker);
 // name
 // score
 // marker (X or O)
-// markers (array of all markers)
+// takenSquares (array of all markers)
 // isWinner
 // put marker (only if square is not taken)
 
 
 /* SQUARE*/
-// content (X or O)
-// taken (if there's already an X or O)
-// position (index in the array of squares)
-// check if taken
+const square = (position) => {
+    let content = ''; // X or O
+    let taken = false;
+
+    // check if taken
+    const status = () => taken;
+
+    // check position (index in the array of squares)
+    const getPosition = () => position;
+
+    // mark X or O
+    const mark = (xo) => {
+        content = xo;
+        taken = true;
+    }
+
+    // remove marker
+    const clear = () => {
+        content = '';
+        taken = false;
+    }    
+
+    return {getPosition, status, mark, clear};
+}
