@@ -1,0 +1,48 @@
+:root {
+    --main-color: lightblue;
+}
+
+body {
+    margin: 0;
+    padding: .5em;
+}
+
+#container {
+    background-color: var(--main-color);
+    display: grid;
+    height: 90vh;
+    grid-template-columns: 1.5fr 2fr 1.5fr;
+    grid-template-rows: 50px .5fr .5fr 3fr 1fr;
+}
+
+#header {
+    background-color: red;
+    grid-column: 1 / 4;
+}
+
+#select {
+    background-color: yellow;
+    grid-column: 1 / 4;
+}
+
+#player-setting {
+    background-color: green;
+    grid-column: 1 / 4;
+}
+
+#player1panel {
+    background-color: blue;
+}
+
+#main {
+    background-color: pink;
+}
+
+#player2panel {
+    background-color: gray;
+}
+
+#winner {
+    background-color: orange;
+    grid-column: 1 / 4;
+}
