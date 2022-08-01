@@ -31,14 +31,69 @@
 // hide/unhide winner panel
 
 /* PLAYER*/
-const player = (name, marker);
-// name
-// score
-// marker (X or O)
-// takenSquares (array of all markers)
-// isWinner
-// put marker (only if square is not taken)
+const player = (name, marker) => {
+    // player name
+    let playerName = name;
+    const getName = () => playerName;
+    const setName = (newName) => {
+        playerName = newName;
+    }
 
+    // player marker
+    const getMarker = () => marker;
+
+    // selected squares (just positions 0-8)
+    let selectedSquares = [];
+
+    // mark square
+    const selectSquare = (square) => {
+        if(!square.isTaken){
+            selectedSquares.push(square.getPosition());
+        }        
+    }
+
+    // player score
+    let score = 0;
+    const getScore = () => score;
+
+    // winner status
+    let isWinner = false;
+
+    // winning square positions in rows, columns and diagonals
+    const winningSituations = [
+        // rows
+        [0, 1, 2], [3, 4, 5], [6, 7 ,8],
+        // columns
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        //diagonals
+        [0, 4, 8], [2, 4, 6]
+    ];
+
+    // win round and score
+    const win = () => {
+        score++;
+        isWinner = true;
+    }
+
+    const checkWin = () => {       
+        for(let i = 0; i < winningSituations.length; i++) {
+            if(selectedSquares.includes(winningSituations[0]) &&
+               selectedSquares.includes(winningSituations[1]) &&
+               selectedSquares.includes(winningSituations[2])) {
+                win();
+               }
+        }
+    }    
+
+    // clear player data
+    const reset = () => {
+        score = 0;
+        isWinner = false;
+        selectedSquares = [];
+    }    
+
+    return {getName, setName, getMarker, selectSquare, getScore, checkWin, reset};
+}
 
 /* SQUARE*/
 const square = (position) => {
@@ -46,7 +101,7 @@ const square = (position) => {
     let taken = false;
 
     // check if taken
-    const status = () => taken;
+    const isTaken = () => taken;
 
     // check position (index in the array of squares)
     const getPosition = () => position;
@@ -63,5 +118,5 @@ const square = (position) => {
         taken = false;
     }    
 
-    return {getPosition, status, mark, clear};
+    return {getPosition, isTaken, mark, clear};
 }
