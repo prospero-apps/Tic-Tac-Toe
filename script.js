@@ -1,30 +1,55 @@
 /* GAME*/
 const game = (() => {
+    // display controller
+    const dc = displayController;
+
     // human vs human or human vs computer
     let gameMode = 'hvh';
     const setGameMode = (mode) => {
         gameMode = mode;
     }
 
+    // the players
+    const player1 = player('Player 1', 'X');
+    const player2 = player('Player 2', 'O'); 
+    const activePlayer = player1;   
 
+    const switchPlayer = () => {
+        if(activePlayer === player1) {
+            activePlayer = player2;
+        } else {
+            activePlayer = player1;
+        }
+    }
 
-    return {};
+    const startGame = () => {
+        gameboard.setGameboard();        
+    }
+    
+    const newRound = () => {
+        gameboard.clearGameboard();
+        activePlayer = player1;
+    }
+    
+    const newGame = () => {
+        player1.reset();
+        player2.reset();
+        gameboard.clearGameboard();
+        activePlayer = player1;
+    }
+
+    return {
+        setGameMode,
+        player1,
+        player2,
+        switchPlayer,
+        startGame,
+        newRound,
+        newGame
+    };
 })();
-// mode (human vs human or human vs computer)
-// select game mode
-// create players
-// player1
-// player2
-// player in control
-// gameboard
-// display controller
-// round number
-// check game over (3 in a row/column/diagonal and tie)
-// start game
-// start new round
-// play again
-// set winner
-// switch control to the other player
+
+
 // AI - let computer make first random move
 // AI - implement minimax for computer
 
