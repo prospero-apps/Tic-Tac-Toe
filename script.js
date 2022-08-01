@@ -18,8 +18,23 @@
 // AI - implement minimax for computer
 
 /* GAMEBOARD*/
-// create array of squares
-// clear (remove all markers and enable all squares)
+const gameboard = (() => {
+    const setGameboard = () => {
+        // create array of squares
+        const squares = [];
+        for(let i = 0; i < 9; i++) {
+            squares.push(square(i));
+        }
+    }    
+
+    const clearGameboard = () => {
+        for(let square of squares) {
+            square.clear();
+        }
+    }
+
+    return {setGameboard, clearGameboard};
+})();
 
 /* DISPLAY CONTROLLER*/
 // collect DOM elements
@@ -100,6 +115,9 @@ const square = (position) => {
     let content = ''; // X or O
     let taken = false;
 
+    // retrieve content
+    const getContent = () => content;
+
     // check if taken
     const isTaken = () => taken;
 
@@ -118,5 +136,5 @@ const square = (position) => {
         taken = false;
     }    
 
-    return {getPosition, isTaken, mark, clear};
+    return {getPosition, getContent, isTaken, mark, clear};
 }
