@@ -55,10 +55,19 @@ button:active {
 #player-settings {
     background-color: green;
     grid-column: 1 / 4;
-    display: flex;
-    justify-content: space-around;
+    display: grid;    
     font-size: 2em;  
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: .75fr 1fr .75fr;
+    place-items: center;
 }
+
+#settings-text,
+#start-game {
+    grid-column: 1 / 3;
+}
+
+
 
 #player-settings label {
     display: block;

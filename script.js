@@ -1,4 +1,15 @@
 /* GAME*/
+const game = (() => {
+    // human vs human or human vs computer
+    let gameMode = 'hvh';
+    const setGameMode = (mode) => {
+        gameMode = mode;
+    }
+
+
+
+    return {};
+})();
 // mode (human vs human or human vs computer)
 // select game mode
 // create players
@@ -54,6 +65,7 @@ const displayController = (() => {
     // Player Settings Panel
     const player1Input = document.getElementById('p1-name');
     const player2Input = document.getElementById('p2-name');
+    const startButton = document.getElementById('start-game');
 
     // Player Areas
     const player1Label = document.getElementById('p1-label');
@@ -114,6 +126,7 @@ const displayController = (() => {
         hvcButton,
         player1Input, 
         player2Input,
+        startButton,
         player1Label,
         player1Score, 
         player2Label, 
