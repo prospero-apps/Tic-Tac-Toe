@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: .5em;
 }
-
+/* CONTAINER */
 #container {
     background-color: var(--main-color);
     display: grid;
@@ -15,34 +15,112 @@ body {
     grid-template-rows: 50px .5fr .5fr 3fr 1fr;
 }
 
-#header {
-    background-color: red;
-    grid-column: 1 / 4;
+#container * {
+    padding: 5px;  
 }
 
-#select {
-    background-color: yellow;
-    grid-column: 1 / 4;
+button {
+    font-size: .75em;
+    width: 12em;
+    min-width: 10em;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: lightblue;
 }
 
-#player-setting {
-    background-color: green;
-    grid-column: 1 / 4;
-}
-
-#player1panel {
+button:hover,
+button:active {
     background-color: blue;
 }
 
+/* HEADER */
+#header {
+    background-color: red;
+    grid-column: 1 / 4;
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* SELECT PLAYERS */
+#select {
+    background-color: yellow;
+    grid-column: 1 / 4;
+    display: flex;
+    justify-content: space-around;
+    font-size: 2em;       
+}
+
+/* SET PLAYERS */
+#player-settings {
+    background-color: green;
+    grid-column: 1 / 4;
+    display: flex;
+    justify-content: space-around;
+    font-size: 2em;  
+}
+
+#player-settings label {
+    display: block;
+}
+
+#player-settings input[type=text] {
+    width: 12em;
+    /* min-width: 12em; */
+    font-size: .75em;
+}
+
+/* PLAYER PANELS */
+.player-panel {
+    background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 3em;
+    font-weight: bold;
+}
+
+.symbol {
+    font-size: 3em;
+}
+
+.score {
+    font-size: 3em;
+}
+
+/* GAMEBOARD */
 #main {
     background-color: pink;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);    
 }
 
-#player2panel {
-    background-color: gray;
+.square {
+    background-color: yellow;
+    border: 4px solid black;
+    margin: -2px;
 }
 
+.square:hover {
+    background-color: orange;
+}
+
+/* WINNER SECTION */
 #winner {
     background-color: orange;
     grid-column: 1 / 4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1em;
+    font-size: 2em;
+    justify-items: center;
 }
+
+#winner-text {
+    grid-column: 1 / 3;
+}
+
+

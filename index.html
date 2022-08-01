@@ -11,23 +11,51 @@
 <body>
     <div id="container">
         <div id="header">Tic-Tac-Toe</div>    
-        <div id="select">
+        <div id="select">            
+            <button type="button" class="playmode" id="hvh">
+                Human vs Human
+            </button>
             Select Players
+            <button type="button" class="playmode" id="hvc">
+                Human vs Computer
+            </button>
         </div>
-        <div id="player-setting">
+        <div id="player-settings">  
+            <div class="player-area">
+                <label for="p1-name">Player 1</label>
+                <input type="text" id="p1-name" placeholder="Player 1">
+            </div>
             Enter the players' names
+            <div class="player-area">
+                <label for="p2-name">Player 2</label>
+                <input type="text" id="p2-name" placeholder="Player 2">
+            </div>
         </div>
-        <div id="player1panel">
-            Player 1
+        <div class="player-panel">
+            <div class="symbol">x</div>
+            <div class="player-name">Player 1</div>
+            <div class="score">2</div>
         </div>
         <div id="main">
-            Gameboard
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
+            <div class="square"></div>
         </div>
-        <div id="player2panel">
-            Player 2
+        <div class="player-panel">
+            <div class="symbol">o</div>
+            <div class="player-name">Player 1</div>
+            <div class="score">2</div>
         </div>
         <div id="winner">
-            The winner is player 1.
+            <div id="winner-text">The winner is player 1.</div>
+            <button type="button" class="play-again">Next Round</button>
+            <button type="button" class="play-again">New Game</button>
         </div>
     </div>
 </body>
