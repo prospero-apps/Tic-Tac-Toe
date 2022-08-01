@@ -85,12 +85,20 @@ const displayController = (() => {
 
     // Select Panel
     const hvhButton = document.getElementById('hvh');
+    hvhButton.addEventListener('click', () => {
+        game.setGameMode('hvh');
+    })
+
     const hvcButton = document.getElementById('hvc');
+    hvcButton.addEventListener('click', () => {
+        game.setGameMode('hvc');
+    })
 
     // Player Settings Panel
     const player1Input = document.getElementById('p1-name');
     const player2Input = document.getElementById('p2-name');
     const startButton = document.getElementById('start-game');
+    startButton.addEventListener('click', game.startGame);
 
     // Player Areas
     const player1Label = document.getElementById('p1-label');
@@ -101,11 +109,13 @@ const displayController = (() => {
     // Gameboard
     const gb = document.getElementById('main');
     const squareFields = document.querySelectorAll('.square');
-
+    
     // Winner Panel
     const winnerLabel = document.getElementById('winner-text');
     const newRoundButton = document.getElementById('new-round');
+    newRoundButton.addEventListener('click', game.newRound);
     const newGameButton = document.getElementById('new-round');
+    newGameButton.addEventListener('click', game.newGame);
 
     // hiding and showing panels
     const hidePanel = (panel) => {
