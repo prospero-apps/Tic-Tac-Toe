@@ -119,6 +119,10 @@ button:active {
     background-color: orange;
 }
 
+.square[disabled]:hover {
+    background-color: yellow;
+}
+
 /* WINNER SECTION */
 #winner {
     background-color: orange;
