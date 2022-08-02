@@ -164,8 +164,8 @@ const displayController = (() => {
     // panels
     const selectPanel = document.getElementById('select');
     const settingsPanel = document.getElementById('player-settings');
-    const player1Panel = document.getElementById('player1area');
-    const player2Panel = document.getElementById('player2area'); 
+    const player1Panel = document.getElementById('player1panel');
+    const player2Panel = document.getElementById('player2panel'); 
     const gameboardPanel = document.getElementById('main');
     const winnerPanel = document.getElementById('winner');
 
@@ -197,11 +197,13 @@ const displayController = (() => {
 
     // hiding and showing panels
     const hidePanel = (panel) => {
+        // remember original display style
+        panel.setAttribute('data-originalDisplay', panel.style.display);
         panel.style.display = 'none';
     }
 
     const showPanel = (panel) => {
-        panel.style.display = 'block';
+        panel.style.display = panel.getAttribute('data-originalDisplay');
     }   
 
     return {
@@ -237,7 +239,11 @@ const displayController = (() => {
 const game = (() => {  
     // initialize program by hiding all panels except the game mode select panel
     const go = () => {
-        // TO DO
+        dc.hidePanel(dc.settingsPanel);
+        dc.hidePanel(dc.player1Panel);
+        dc.hidePanel(dc.player2Panel);
+        dc.hidePanel(dc.gameboardPanel);
+        dc.hidePanel(dc.winnerPanel);        
     }
 
     // GAME MODE - human vs human or human vs computer
@@ -280,11 +286,15 @@ const game = (() => {
         activePlayer = player1;
     }       
 
-    // START GAME, NEW GAME, NEXT ROUND
+    // START GAME, NEW GAME, NEXT ROUND   
     // start game
     const startGame = () => {
         gameboard.setGameboard();  
         setPlayers();
+        dc.hidePanel(dc.settingsPanel);
+        dc.showPanel(dc.player1Panel);
+        dc.showPanel(dc.player2Panel);
+        dc.showPanel(dc.gameboardPanel);
     }
 
     // new game
@@ -299,6 +309,12 @@ const game = (() => {
         // clear inputs
         dc.player1Input.value = '';
         dc.player2Input.value = '';
+
+        dc.hidePanel(dc.winnerPanel);
+        dc.hidePanel(dc.player1Panel);
+        dc.hidePanel(dc.player2Panel);
+        dc.hidePanel(dc.gameboardPanel);
+        dc.showPanel(dc.selectPanel);
     }
 
     // next round
@@ -308,6 +324,7 @@ const game = (() => {
         player1.reset(false);
         player2.reset(false);  
         activePlayer = player1;
+        dc.hidePanel(dc.winnerPanel);
     }
     
     // HELPER FUNCTIONS
@@ -344,6 +361,9 @@ const game = (() => {
     const showWinner = (winner) => {
         disableGameboard();
 
+        // show winner panel
+        dc.showPanel(dc.winnerPanel);
+
         // set winner text
         dc.winnerLabel.textContent = `The winner is ${winner.getName()}.`;
     }
@@ -351,6 +371,9 @@ const game = (() => {
     // show tie info
     const tie = () => {
         disableGameboard();
+
+        // show winner panel
+        dc.showPanel(dc.winnerPanel);
 
         // set winner text
         dc.winnerLabel.textContent = "There's a tie.";
@@ -366,6 +389,8 @@ const game = (() => {
         setGameMode('hvh');
         dc.settingsText.textContent = "Enter the players' names"
         dc.player2Input.style.visibility = 'visible'; 
+        dc.hidePanel(dc.selectPanel);
+        dc.showPanel(dc.settingsPanel);
     })
 
     dc.hvcButton.addEventListener('click', () => {
@@ -373,6 +398,8 @@ const game = (() => {
         dc.settingsText.textContent = "Enter Player 1's name"
         dc.player2NameText.textContent = 'Computer';
         dc.player2Input.style.visibility = 'hidden'; 
+        dc.hidePanel(dc.selectPanel);
+        dc.showPanel(dc.settingsPanel);
     })
 
     // Player Settings Panel
