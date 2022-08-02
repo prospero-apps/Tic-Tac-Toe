@@ -122,7 +122,23 @@ const gameboard = (() => {
         }
     }
 
-    return {getSquares, setGameboard, clearGameboard, disableGameboard};
+    // const allSquaresTaken = () => {
+    //     squares.every((square) => square.checkTaken());
+    // }
+
+    const allSquaresTaken = () => {
+        let test = squares.every(isTaken);
+
+        function isTaken(square) {
+            return square.checkTaken();
+        }
+
+        return test;
+
+        // squares.every((square) => square.checkTaken());
+    }
+
+    return {getSquares, setGameboard, clearGameboard, disableGameboard, allSquaresTaken};
 })();
 
 /* GAME*/
@@ -227,6 +243,8 @@ const game = (() => {
                             player2Score.textContent = activePlayer.getScore();
                         }
                         showWinner(activePlayer);
+                    } else if(gameboard.allSquaresTaken()) {
+                        tie();
                     }
                 }                
                 switchPlayer();
@@ -267,16 +285,26 @@ const game = (() => {
     const newGameButton = document.getElementById('new-game');
     newGameButton.addEventListener('click', newGame);
 
-    const showWinner = (winner) => {
+    const disableGameboard = () => {
         // disable gameboard 
         gameboard.disableGameboard();
 
         for(const square of squareFields) {
             square.setAttribute('disabled', '');
         }
+    }
+
+    const showWinner = (winner) => {
+        disableGameboard();
 
         // set winner text
         winnerLabel.textContent = `The winner is ${winner.getName()}.`;
+    }
+
+    const tie = () => {
+        disableGameboard();
+        // set winner text
+        winnerLabel.textContent = "There's a tie.";
     }
 
     
