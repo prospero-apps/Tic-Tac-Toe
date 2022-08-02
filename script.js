@@ -56,14 +56,14 @@ const player = (name, marker, genericName) => {
     }    
 
     // PLAYER RESET   
-    const reset = (resetScore=true) => {
-        if(resetScore){
+    const reset = (hardReset=true) => {
+        if(hardReset){
             score = 0;
+            setName(genericName);
         }
         
         isWinner = false;
-        selectedSquares = [];
-        setName(genericName);
+        selectedSquares = [];        
     }    
 
     return {
