@@ -17,6 +17,10 @@ const player = (name, marker, genericName) => {
         selectedSquares.push(square.getPosition());      
     }
 
+    const clearSelected = () => {
+        selectedSquares = [];
+    }
+
     let countSelected = () => selectedSquares.length;
 
     // player score
@@ -26,6 +30,10 @@ const player = (name, marker, genericName) => {
     // winner status
     let isWinner = false;
     const getIsWinner = () => isWinner;
+
+    const clearIsWinner = () => {
+        isWinner = false;
+    }
 
     // winning square positions in rows, columns and diagonals
     const winningSituations = [
@@ -62,7 +70,7 @@ const player = (name, marker, genericName) => {
         setName(genericName);
     }    
 
-    return {getName, getGenericName, setName, getMarker, selectSquare, countSelected, getScore, getIsWinner, checkWin, reset};
+    return {getName, getGenericName, setName, getMarker, selectSquare, countSelected, clearSelected, getScore, getIsWinner, clearIsWinner, checkWin, reset};
 }
 
 /* SQUARE*/
@@ -161,16 +169,7 @@ const game = (() => {
         activePlayer = player1;
     }
     
-    const newRound = () => {
-        gameboard.clearGameboard();
-    }
     
-    const newGame = () => {
-        player1.reset();
-        player2.reset();
-        gameboard.clearGameboard();
-        setPlayers();
-    }
 
 
 
@@ -234,12 +233,38 @@ const game = (() => {
             }            
         })
     }
+
+    const clearSquares = () => {
+        for(const square of squareFields) {
+            square.textContent = '';
+            square.removeAttribute('disabled');
+        }
+    }
+
+    const nextRound = () => {
+        gameboard.clearGameboard();
+        clearSquares();
+        player1.clearSelected();
+        player2.clearSelected();
+        player1.clearIsWinner();
+        player2.clearIsWinner();
+    }
+    
+    const newGame = () => {
+        gameboard.clearGameboard();
+        clearSquares();
+        player1.reset();
+        player2.reset();        
+        setPlayers();
+    }
+
+    
     
     // Winner Panel
     const winnerLabel = document.getElementById('winner-text');
     const newRoundButton = document.getElementById('new-round');
-    newRoundButton.addEventListener('click', newRound);
-    const newGameButton = document.getElementById('new-round');
+    newRoundButton.addEventListener('click', nextRound);
+    const newGameButton = document.getElementById('new-game');
     newGameButton.addEventListener('click', newGame);
 
     const showWinner = (winner) => {
@@ -253,6 +278,8 @@ const game = (() => {
         // set winner text
         winnerLabel.textContent = `The winner is ${winner.getName()}.`;
     }
+
+    
 
     // hiding and showing panels
     const hidePanel = (panel) => {
@@ -296,8 +323,9 @@ const game = (() => {
         activePlayer,
         switchPlayer,
         startGame,
-        newRound,
-        newGame, go
+        nextRound,
+        newGame, 
+        go
     };
 })();
 

@@ -120,7 +120,7 @@ button:active {
 }
 
 .square[disabled]:hover {
-    background-color: yellow;
+    background-color: pink;
 }
 
 /* WINNER SECTION */
