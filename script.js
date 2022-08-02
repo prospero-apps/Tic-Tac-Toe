@@ -152,7 +152,7 @@ const game = (() => {
     const setGameMode = (mode) => {
         gameMode = mode;
     }
-
+  
     // the players
     const player1 = player('Player 1', 'X', 'Player 1');
     const player2 = player('Player 2', 'O', 'Player 2'); 
@@ -171,9 +171,30 @@ const game = (() => {
         setPlayers();
     }
 
+    // const setPlayers = () => {
+    //     let name1 = player1Input.value === '' ? player1.getGenericName() : player1Input.value;   
+    //     let name2 = player2Input.value === '' ? player2.getGenericName() : player2Input.value; 
+        
+    //     player1.setName(name1);
+    //     player2.setName(name2);
+    //     player1Label.textContent = player1.getName();
+    //     player2Label.textContent = player2.getName();
+    //     player1Score.textContent = player1.getScore(); 
+    //     player2Score.textContent = player2.getScore(); 
+
+    //     activePlayer = player1;
+    // }
+
     const setPlayers = () => {
-        let name1 = player1Input.value === '' ? player1.getGenericName() : player1Input.value;   
-        let name2 = player2Input.value === '' ? player2.getGenericName() : player2Input.value; 
+        let name1 = player1Input.value === '' ? player1.getGenericName() : player1Input.value; 
+        let name2;
+
+        if (gameMode === 'hvh') {
+            name2 = player2Input.value === '' ? player2.getGenericName() : player2Input.value; 
+        } else {
+            name2 = 'Computer';                        
+        }
+        
         
         player1.setName(name1);
         player2.setName(name2);
@@ -208,13 +229,19 @@ const game = (() => {
     const hvcButton = document.getElementById('hvc');
     hvcButton.addEventListener('click', () => {
         setGameMode('hvc');
+        settingsText.textContent = "Enter Player 1's name"
+        player2NameText.textContent = 'Computer';
+        player2Input.style.display = 'none'; 
     })
 
     // Player Settings Panel
+    const settingsText = document.getElementById('settings-text');
     const player1Input = document.getElementById('p1-name');
     const player2Input = document.getElementById('p2-name');
+    const player2NameText = document.querySelector('#player2area label');
     const startButton = document.getElementById('start-game');
     startButton.addEventListener('click', startGame);
+  
 
     // Player Areas
     const player1Label = document.getElementById('p1-label');
@@ -225,6 +252,33 @@ const game = (() => {
     // Gameboard
     const gb = document.getElementById('main');
     const squareFields = document.querySelectorAll('.square');
+    // for(const square of squareFields) {
+    //     square.addEventListener('click', (e) => {
+    //         let currentSquare = gameboard.getSquares()[square.dataset.index];
+            
+    //         if(!currentSquare.checkTaken()){                
+    //             currentSquare.mark();
+    //             e.target.textContent = activePlayer.getMarker();
+    //             activePlayer.selectSquare(currentSquare);
+    //             let selected = activePlayer.countSelected();
+    //             if(selected > 2) {
+    //                 activePlayer.checkWin();
+    //                 if(activePlayer.getIsWinner()) {
+    //                     if(activePlayer === player1) {
+    //                         player1Score.textContent = activePlayer.getScore();
+    //                     } else {
+    //                         player2Score.textContent = activePlayer.getScore();
+    //                     }
+    //                     showWinner(activePlayer);
+    //                 } else if(gameboard.allSquaresTaken()) {
+    //                     tie();
+    //                 }
+    //             }                
+    //             switchPlayer();
+    //         }            
+    //     })
+    // }
+
     for(const square of squareFields) {
         square.addEventListener('click', (e) => {
             let currentSquare = gameboard.getSquares()[square.dataset.index];
@@ -248,8 +302,31 @@ const game = (() => {
                     }
                 }                
                 switchPlayer();
+                if(gameMode === 'hvc' && !gameboard.allSquaresTaken() && activePlayer === player2){
+                    randomSquare().click();
+                }
             }            
         })
+    }
+
+    // const randomSquare = () => {
+    //     let emptySquares = squareFields.filter((square) => {
+    //         gameboard.getSquares()[square.dataset.index].checkTaken === false;
+    //     })
+    //     console.log(emptySquares);
+
+    const randomSquare = () => {
+        let emptySquares = Array.from(squareFields).filter(checkEmpty);
+
+        function checkEmpty(square) {
+            //return gameboard.getSquares()[square.dataset.index].checkTaken === false;
+            //return gameboard.getSquares()[square.dataset.index];
+            return square.textContent === '';
+        }           
+        
+        return emptySquares[Math.floor(Math.random() * emptySquares.length)];
+
+
     }
 
     const clearSquares = () => {
@@ -266,6 +343,7 @@ const game = (() => {
         player2.clearSelected();
         player1.clearIsWinner();
         player2.clearIsWinner();
+        activePlayer = player1;
     }
     
     const newGame = () => {
@@ -274,6 +352,7 @@ const game = (() => {
         player1.reset();
         player2.reset();        
         setPlayers();
+        activePlayer = player1;
     }
 
     
@@ -358,8 +437,6 @@ const game = (() => {
 })();
 
 
-// AI - let computer make first random move
-// AI - implement minimax for computer
 
 
 
